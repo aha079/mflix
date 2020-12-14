@@ -1,0 +1,34 @@
+{% extends "header.html" %}
+{% block body %}
+{% if movie %}
+<div class="content">
+  <h1>Watching <a href="/movies/{{ movie["_id"] }}">{{ movie["title"] }}</a></h1>
+
+  <p>
+    <span class="tag is-rounded is-warning">{{ movie["rated"]}}</span>
+  </p>
+
+  <p>
+    <span>Directed by </span>
+    {% for director in movie["directors"] %}
+    <span><a href="/?search={{director}}">{{director}}</a>, </span>
+    {% endfor %}
+    <span>{{movie["year"]}}</span>
+    <br/>
+    <span>Runtime:</span>
+    <span class="tag is-white">{{ movie["runtime"] // 60 }} hr {{ movie["runtime"] % 60 }} min</span>
+  </p>
+
+  <div style="border: 1px white solid; width: 562px;">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ "dQw4w9WgXcQ" if (movie["year"] % 2 == 0) else "L_jWHffIx5E" }}?autoplay=1" frameborder="0" allowfullscreen></iframe>
+  </div>
+</div>
+{% else %}
+<div class="content has-text-centered">
+  <h3 class="title">No movie found.</h3>
+  <h6 class="subtitle">Sorry about that!</h6>
+
+  <a class="button is-primary" href="/">Back To MFlix</a>
+</div>
+{% endif %}
+{% endblock %}
